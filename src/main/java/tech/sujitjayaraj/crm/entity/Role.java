@@ -1,20 +1,17 @@
 package tech.sujitjayaraj.crm.entity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+import lombok.Getter;
 
-@Entity
-@Data
-public class Role {
+@Getter
+public enum Role {
+    OWNER("ROLE_OWNER"),
+    ADMIN("ROLE_ADMIN"),
+    MANAGER("ROLE_MANAGER"),
+    EMPLOYEE("ROLE_EMPLOYEE");
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private final String name;
 
-    @NotBlank
-    @Column(unique = true)
-    private String name;
-
-    private Double maxContractValue;
+    Role(String name){
+        this.name = name;
+    }
 }
