@@ -1,21 +1,31 @@
-(function () {
-    "use strict";
+"use strict";
 
-    var treeviewMenu = $('.app-menu');
+var treeviewMenu = document.querySelector('.app-menu');
 
-    // Toggle Sidebar
-    $('[data-toggle="sidebar"]').click(function(event) {
-        event.preventDefault();
-        $('.app').toggleClass('sidenav-toggled');
+// Toggle Sidebar
+document.querySelectorAll('[data-toggle="sidebar"]').forEach(function (element) {
+    element.addEventListener('click', function (event) {
+        document.querySelector('.app').classList.toggle('sidenav-toggled');
     });
+});
 
-    // Activate sidebar treeview toggle
-    $("[data-toggle='treeview']").click(function(event) {
-        event.preventDefault();
-        if(!$(this).parent().hasClass('is-expanded')) {
-            treeviewMenu.find("[data-toggle='treeview']").parent().removeClass('is-expanded');
-        }
-        $(this).parent().toggleClass('is-expanded');
-    });
+// Activate sidebar treeview toggle
+document.querySelectorAll('[data-toggle="treeview"]').forEach(function (element) {
+    const parent = this.parentElement;
 
-})();
+    if (!parent.classList.contains('is-expanded')) {
+        treeviewMenu.querySelectorAll('[data-toggle="treeview"]').forEach(function (item) {
+            item.parentElement.classList.remove('is-expanded');
+        });
+    }
+
+    parent.classList.toggle('is-expanded');
+});
+
+document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(function (element){
+    new bootstrap.Dropdown(element);
+});
+
+document.querySelectorAll('[data-toggle="treeview"].is-expanded').forEach(function (element) {
+    element.parentElement.classList.toggle('is-expanded');
+})
