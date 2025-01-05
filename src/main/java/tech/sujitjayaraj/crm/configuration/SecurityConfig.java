@@ -9,17 +9,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import tech.sujitjayaraj.crm.service.CustomUserDetailsService;
+import tech.sujitjayaraj.crm.service.UserService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final CustomUserDetailsService customUserDetailsService;
+    private final UserService userService;
 
     @Autowired
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
-        this.customUserDetailsService = customUserDetailsService;
+    public SecurityConfig(UserService userService) {
+        this.userService = userService;
     }
 
     @Bean
@@ -45,7 +45,7 @@ public class SecurityConfig {
                         .failureUrl("/login?error=true"))
                 .logout(logout -> logout.logoutSuccessUrl("/login"))
                 .getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(customUserDetailsService);
+                .userDetailsService(userService);
 
         return httpSecurity.build();
     }

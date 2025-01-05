@@ -4,28 +4,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.sujitjayaraj.crm.entity.User;
 import tech.sujitjayaraj.crm.repository.UserRepository;
 
+import java.util.List;
+
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
     @Autowired
-    public CustomUserDetailsService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
+    public User loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not found"));
+    }
 
-        if (user == null) {
-            throw new UsernameNotFoundException("User with email " + email + " not found");
-        }
-
-        return user;
+    public List<User> findBySupervisor(User supervisor) {
+        return userRepository.findBySupervisor(supervisor);
     }
 }
