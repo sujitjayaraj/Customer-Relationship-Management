@@ -1,10 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <title>Home - Customer Relationship Manager</title>
 </head>
 <body>
-
+  <section layout:fragment="content">
+    <div class="app-title">
+      <div>
+        <h1>Search for clients</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tile">
+          <div class="tile-body">
+            <h4 class="mb-3 line-head">List of Clients</h4>
+            <div class="col-lg-7">
+              <p class="bs-component">
+                All clients of your team members
+                <a th:href="@{/manager/search}"><button class="btn btn-info" type="button">Search</button></a>
+              </p>
+              <p class="bs-component">
+                All clients from your state
+                <a th:href="@{/manager/search/state}"><button class="btn btn-info" type="button">Search</button></a>
+              </p>
+              <form th:action="@{/manager/search/status}" method="post">
+                All clients with status
+                <select th:name="status">
+                  <option value="LEAD">Lead</option>
+                  <option value="CLIENT">Client</option>
+                  <option value="LOST">Lost</option>
+                </select>
+                <input class="btn btn-primary" type="submit" value="Search">
+              </form>
+              <br/>
+              <form th:action="@{/manager/search/city}" method="post">
+                All clients from city
+                <input type="text" name="city" th:value="${city}"/>
+                <input class="btn btn-primary" type="submit" value="Search" />
+              </form>
+              <br/>
+              <form th:action="@{/manager/search/name}" method="post">
+                All clients with name
+                <input type="text" name="name" th:value="${name}"/>
+                <input class="btn btn-primary" type="submit" value="Search" />
+              </form>
+              <br/>
+              <div>
+                <table class="table table-hover table-bordered" id="sampleTable">
+                  <thead>
+                  <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>status</th>
+                    <th>created</th>
+                    <th>email</th>
+                    <th>city</th>
+                    <th>state</th>
+                    <th>responsible employee</th>
+                    <th>action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="client : ${clients}">
+                    <td th:text="${client.id}"></td>
+                    <td th:text="${client.name}"></td>
+                    <td th:text="${client.status}"></td>
+                    <td th:text="${client.created}"></td>
+                    <td th:text="${client.email}"></td>
+                    <td th:text="${client.address.city}"></td>
+                    <td th:text="${client.address.state}"></td>
+                    <td th:text="${client.user.name}"></td>
+                    <td><a th:href="@{/client/details/{id}(id=${client.id})}"></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <br/>
+              <p class="bs-component">
+                <a th:href="@{/manager/print}"><button class="btn btn-primary btn-lg btn-block" type="button">Save results as PDF file</button></a>
+              </p>
+              <form th:action="@{/manager/export}" method="post">
+                Export clients to CSV file
+                <input type="text" name="filename" placeholder="Filename" th:value="${filename}"/>
+                <input class="btn btn-primary" type="submit" value="Export" />
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </body>
 </html>

@@ -16,7 +16,7 @@
             </li>
             <li class="dropdown"><a class="app-nav__item" href="#" data-bs-toggle="dropdown" aria-label="Show notifications"><i class="bi bi-bell fs-5"></i></a>
                 <ul class="app-notification dropdown-menu dropdown-menu-right">
-                    <li class="app-notification__title" th:text="'You have ' + ${#lists.size(notifications)} +' new notifications'"></li>
+                    <li class="app-notification__title" th:text="'You have new notifications'"></li>
                 </ul>
             </li>
             <li class="dropdown"><a class="app-nav__item" href="#" data-bs-toggle="dropdown" aria-label="Open Profile Menu"><i class="bi bi-person fs-4"></i></a>
@@ -29,9 +29,9 @@
     <div class="app-sidebar__overlay" data-toggle="sidebar">
         <aside class="app-sidebar">
             <div class="app-sidebar__user">
-                <div>
-                    <span class="app-sidebar__user-name" th:text="${user.name}"></span>
-                    <span class="app-sidebar__user-designation" th:text="${user.authorities}"></span>
+                <div sec:authorize="isAuthenticated()">
+                    <span class="app-sidebar__user-name" sec:authentication="name"></span>
+                    <span class="app-sidebar__user-designation" sec:authentication="authorities"></span>
                 </div>
             </div>
             <ul class="app-menu">
