@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 
@@ -16,14 +17,13 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "First Name is mandatory")
-    private String firstName;
+    @NotBlank(message = "Name is mandatory")
+    private String name;
 
-    @NotBlank(message = "Last Name is mandatory")
-    private String lastName;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
-    private String status;
-
+    @CreationTimestamp
     private Instant created;
 
     @Email
@@ -40,12 +40,7 @@ public class Client {
     @JsonIgnore
     private User user;
 
-    @PrePersist
-    private void setCreated() {
-        this.created = Instant.now();
-    }
-
-    public String getName() {
-        return getFirstName() + " " + getLastName();
+    public enum Status {
+        LEAD, CLIENT, LOST
     }
 }

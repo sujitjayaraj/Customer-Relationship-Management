@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Import CSV - Customer Relationship Manager</title>
 </head>
 <body>
-
+    <section layout:fragment="content">
+        <div class="app-title">
+            <div>
+                <h1>
+                    <i class="bi bi-upload"></i> Import CSV
+                </h1>
+                <p></p>
+            </div>
+            <ul class="app-breadcrumb breadcrumb">
+                <li class="breadcrumb-item"><i class="bi bi-house"></i></li>
+                <li class="breadcrumb-item"><a href="#"> Import CSV</a></li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <form th:action="@{/import}" method="post">
+                                File name:
+                                <input type="text" name="filename" th:value="${filename}" />
+                                <input class="btn btn-primary" type="submit" value="Import" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
