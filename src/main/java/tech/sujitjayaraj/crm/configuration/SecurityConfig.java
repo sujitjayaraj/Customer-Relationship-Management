@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/login", "/register", "/css/**", "/js/**", "/actuator/**").permitAll()
                                 .requestMatchers("/").hasAnyRole("OWNER", "ADMIN", "EMPLOYEE", "MANAGER")
-                                .requestMatchers("/client/**", "/contract/**", "/employeeSearch/**", "/event/**", "/import/**").hasAnyRole("OWNER", "MANAGER", "EMPLOYEE")
+                                .requestMatchers("/client/**", "/contract/**", "/employee/**", "/event/**", "/import/**").hasAnyRole("OWNER", "MANAGER", "EMPLOYEE")
                                 .requestMatchers("/manager/**").hasAnyRole("OWNER", "MANAGER")
                                 .requestMatchers("/admin/**").hasAnyRole("OWNER", "ADMIN"))
                 .formLogin(login -> login

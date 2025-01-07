@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import tech.sujitjayaraj.crm.entity.RegistrationForm;
-import tech.sujitjayaraj.crm.entity.Role;
-import tech.sujitjayaraj.crm.entity.User;
+import tech.sujitjayaraj.crm.entity.*;
 import tech.sujitjayaraj.crm.repository.UserRepository;
 
 import java.util.HashSet;
@@ -57,6 +55,7 @@ public class RegistrationController {
         user.setPhone(form.getPhone());
         user.setActive(true);
         user.setRoles(roles);
+
         userRepository.save(user);
 
         return "redirect:/login";

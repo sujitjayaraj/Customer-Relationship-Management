@@ -1,10 +1,97 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Employee Search - Customer Relationship Manager</title>
 </head>
 <body>
+    <section layout:fragment="content">
+        <div class="app-title">
+            <div>
+                <h1><i class="bi bi-list"></i> Search for clients</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="tile-body">
+                        <h4 class="mb-3 line-head">List of Clients</h4>
 
+                        <div class="col-lg-7">
+                            <p class="bs-component">
+                                All your clients
+                                <a th:href="@{/employee/search}"><button class="btn btn-info" type="button">Search</button></a>
+                            </p>
+                            <p class="bs-component">
+                                All clients from your city
+                                <a th:href="@{/employee/search/city}"><button class="btn btn-info" type="button">Search</button></a>
+                            </p>
+                            <form th:action="@{/employee/search/status}" method="post">
+                                All clients with status
+                                <select th:name="status">
+                                    <option value="LEAD">Lead</option>
+                                    <option value="CLIENT">Client</option>
+                                    <option value="LOST">Lost</option>
+                                </select>
+                                <input class="btn btn-primary" type="submit" value="Search">
+                            </form>
+                            <br/>
+                            <form th:action="@{/employee/search/name}" method="post">
+                                All clients with name
+                                <input type="text" name="name" th:value="${name}" />
+                                <input class="btn btn-primary" type="submit" value="Search" />
+                            </form>
+                            <div class="tile-footer"></div>
+                            <br/>
+                            <div>
+                                <table class="table table-hover table-bordered" id="sampleTable">
+                                    <thead>
+                                    <tr>
+                                        <th>id</th>
+                                        <th>name</th>
+                                        <th>status</th>
+                                        <th>created</th>
+                                        <th>email</th>
+                                        <th>phone</th>
+                                        <th>state</th>
+                                        <th>city</th>
+                                        <th>street</th>
+                                        <th>responsible employee</th>
+                                        <th>action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="client : ${clients}">
+                                        <td th:text="${client.id}"></td>
+                                        <td th:text="${client.name}"></td>
+                                        <td th:text="${client.status}"></td>
+                                        <td th:text="${client.created}"></td>
+                                        <td th:text="${client.email}"></td>
+                                        <td th:text="${client.phone}"></td>
+                                        <td th:text="${client.address.state}"></td>
+                                        <td th:text="${client.address.city}"></td>
+                                        <td th:text="${client.address.street}"></td>
+                                        <td th:text="${client.user.name}"></td>
+                                        <td><a th:href="@{/client/details/{id}(id=${client.id})}" th:text="details"></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br/>
+                            <div class="tile-footer">
+                                <p class="bs-component">
+                                    <a th:href="@{/employee/search/print}"><button class="btn btn-primary btn-lg btn-block">Save results as PDF</button></a>
+                                </p>
+                                <form th:action="@{/employee/search/export}" method="post">
+                                    Export results to CSV
+                                    <input type="text" name="filename" th:value="${filename}" placeholder="Filename"/>
+                                    <input class="btn btn-primary" type="submit" value="Export" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

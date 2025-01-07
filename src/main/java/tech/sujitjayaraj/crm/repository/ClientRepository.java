@@ -22,4 +22,10 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     List<Client> findByNameContainingIgnoreCaseOrderByName(String name);
 
+    List<Client> findByAddressCityOrderByNameAsc(String city);
+
+    List<Client> findByStatusAndAddressCityOrderByNameAsc(Client.Status status, String city);
+
+    List<Client> findByNameContainingIgnoreCaseAndAddressCityOrderByNameAsc(String name, String city);
+
 }
